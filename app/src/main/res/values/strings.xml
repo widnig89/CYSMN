@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">CYSMN</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="_hello_world">Hello world!</string>
+    <string name="_action_settings">Settings</string>
 </resources>

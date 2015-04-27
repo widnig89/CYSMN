@@ -1,9 +1,11 @@
-package at.sum.android.cysmn;
+package at.sum.android.cysmn.gui;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import at.sum.android.cysmn.R;
 
 
 public class MainActivity extends ActionBarActivity {
