@@ -7,8 +7,33 @@
 
     <TextView
         android:id="@+id/app_name"
-        android:text="@string/app_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="@string/app_name"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="80sp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_a_main_start_game"
+        android:id="@+id/main_btn_start"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:onClick="btnStartGame"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_a_main_debug_output"
+        android:id="@+id/btn_debug_output"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="btnViewDebugOutput"/>
 
 </RelativeLayout>

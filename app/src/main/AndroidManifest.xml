@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="at.sum.android.cysmn" >
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
+        android:name=".utils.CysmnApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,6 +19,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".gui.ChooseFactionActivity"
+            android:label="@string/title_activity_choose_faction" >
+        </activity>
+        <activity
+            android:name=".gui.DisplayLocationActivity"
+            android:label="@string/title_activity_location_display" >
+        </activity>
+        <activity
+            android:name=".gui.OutputDebugActivity"
+            android:label="@string/title_activity_output_debug" >
+        </activity>
+
+        <service
+            android:name=".sensing.googleplay.location.LocationUpdateIntentService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

@@ -3,4 +3,20 @@
 
     <string name="_hello_world">Hello world!</string>
     <string name="_action_settings">Settings</string>
+    <string name="_a_choose_faction">Choose Faction:</string>
+    <string name="_a_faction_runner">Runner</string>
+    <string name="_a_faction_online_player">Online Player</string>
+    <string name="_a_main_start_game">PLAY!</string>
+    <string name="_a_location_display_longitude_label">Longitude:</string>
+    <string name="_a_location_display_latitude_label">Latitude:</string>
+    <string name="_a_location_display_longitude_value">no value</string>
+    <string name="_a_location_display_latitude_value">no value</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="_a_output_debug_position">View My Position</string>
+    <string name="_a_main_debug_output">View Debug Output</string>
+
+    <string name="title_activity_choose_faction">ChooseFactionActivity</string>
+    <string name="title_activity_location_display">My Location</string>
+    <string name="title_activity_output_debug">Info Page (Debug)</string>
 </resources>
