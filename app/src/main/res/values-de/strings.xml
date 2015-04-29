@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">CYSMN</string>
+
+    <string name="_hello_world">Hallo Welt!</string>
+    <string name="_action_settings">Einstellungen</string>
+    <string name="_a_choose_faction">Wähle Fraktion:</string>
+    <string name="_a_faction_runner">Läufer</string>
+    <string name="_a_faction_online_player">Online Spieler</string>
+    <string name="_a_main_start_game">SPIELE!</string>
+    <string name="_a_location_display_longitude_text">Longitude:</string>
+    <string name="_a_location_display_latitude_text">Latitude:</string>
+    <string name="_a_location_display_longitude_value">kein Wert</string>
+    <string name="_a_location_display_latitude_value">kein Wert</string>
+    <string name="_a_location_display_bearing_label">Richtung:</string>
+    <string name="_a_location_display_bearing_value">kein Wert</string>
+
+    <string name="title_activity_location_display">Mein Standort</string>
+</resources>
