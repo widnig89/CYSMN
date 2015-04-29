@@ -16,7 +16,7 @@ import com.google.android.gms.location.LocationListener;
 import java.text.DateFormat;
 import java.util.Date;
 
-import at.sum.android.cysmn.logic.LocationLogic;
+import at.sum.android.cysmn.logic.location.LocationLogic;
 import at.sum.android.cysmn.sensing.googleplay.GoogleApiClientListener;
 import at.sum.android.cysmn.sensing.googleplay.GoogleApiClientProvider;
 import at.sum.android.cysmn.utils.AppLogger;
@@ -124,8 +124,8 @@ public class LocationUpdateService extends GoogleApiClientListener implements Lo
 
     private LocationRequest createLocationRequest() {
         LocationRequest locationRequest = new LocationRequest();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(5000);
+        locationRequest.setInterval(1000);
+        locationRequest.setFastestInterval(500);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         return locationRequest;

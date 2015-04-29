@@ -1,12 +1,9 @@
-package at.sum.android.cysmn.logic;
+package at.sum.android.cysmn.logic.location;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.location.Location;
 
-import at.sum.android.cysmn.gui.DisplayLocationActivity;
-import at.sum.android.cysmn.sensing.googleplay.GoogleApiClientListener;
+import at.sum.android.cysmn.gui.GuiUpdater;
 import at.sum.android.cysmn.sensing.googleplay.location.LocationUpdateService;
 import at.sum.android.cysmn.utils.AppLogger;
 
@@ -21,7 +18,7 @@ public class LocationLogic {
 
     private boolean isInBackground;
     private Context ctx;
-    private DisplayLocationActivity locationActivity;
+    private GuiUpdater locationActivity;
     private Location currentLocation;
 
     private static LocationLogic instance;
@@ -33,7 +30,7 @@ public class LocationLogic {
 
     }
 
-    public void registerLocationActivity(DisplayLocationActivity activity)
+    public void registerLocationActivity(GuiUpdater activity)
     {
         locationActivity = activity;
     }
@@ -54,7 +51,8 @@ public class LocationLogic {
         if(locationActivity == null)
             return;
 
-        locationActivity.updateLocation(currentLocation.getLongitude(), currentLocation.getLatitude());
+        locationActivity.updateGui();
+
         AppLogger.logDebug(this.getClass().getSimpleName(), "updateGui");
 
 
@@ -62,7 +60,16 @@ public class LocationLogic {
 
     public void notify(LocationUpdateService listener) {
 
-        currentLocation = listener.getCurrentLocation();
-        updateGui();
+        boolean new_is_better = LocationHelper.isBetterLocation(listener.getCurrentLocation(), currentLocation);
+
+        if(new_is_better) {
+            currentLocation = listener.getCurrentLocation();
+            updateGui();
+        }
+    }
+
+    public Location getCurrentLocation()
+    {
+        return currentLocation;
     }
 }

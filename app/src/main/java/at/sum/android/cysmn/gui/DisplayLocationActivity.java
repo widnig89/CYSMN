@@ -1,6 +1,7 @@
 package at.sum.android.cysmn.gui;
 
 import android.content.IntentFilter;
+import android.location.Location;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,14 +9,15 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import at.sum.android.cysmn.R;
-import at.sum.android.cysmn.logic.LocationLogic;
+import at.sum.android.cysmn.logic.location.LocationLogic;
 
 
-public class DisplayLocationActivity extends ActionBarActivity {
+public class DisplayLocationActivity extends ActionBarActivity implements GuiUpdater {
 
 
     private TextView txtLongitude;
     private TextView txtLatitude;
+    private TextView txtBearing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,7 @@ public class DisplayLocationActivity extends ActionBarActivity {
 
         txtLongitude = (TextView)findViewById(R.id.location_display_txtLongitude);
         txtLatitude = (TextView)findViewById(R.id.location_display_txtLatitude);
+        txtBearing = (TextView)findViewById(R.id.location_display_txtBearing);
 
     }
 
@@ -63,8 +66,16 @@ public class DisplayLocationActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void updateLocation(double longitude, double latitude) {
-        txtLongitude.setText(Double.toString(longitude));
-        txtLatitude.setText(Double.toString(latitude));
+
+
+    @Override
+    public void updateGui() {
+
+        LocationLogic logic = LocationLogic.getInstance(this, false);
+
+        Location curLocation = logic.getCurrentLocation();
+        txtLongitude.setText(Double.toString(curLocation.getLongitude()));
+        txtLatitude.setText(Double.toString(curLocation.getLatitude()));
+        txtBearing.setText(Float.toString(curLocation.getBearing()));
     }
 }

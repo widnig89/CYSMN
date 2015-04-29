@@ -11,6 +11,8 @@
     <string name="_a_location_display_latitude_label">Latitude:</string>
     <string name="_a_location_display_longitude_value">no value</string>
     <string name="_a_location_display_latitude_value">no value</string>
+    <string name="_a_location_display_bearing_label">Bearing:</string>
+    <string name="_a_location_display_bearing_value">no value</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="_a_output_debug_position">View My Position</string>
@@ -19,4 +21,6 @@
     <string name="title_activity_choose_faction">ChooseFactionActivity</string>
     <string name="title_activity_location_display">My Location</string>
     <string name="title_activity_output_debug">Info Page (Debug)</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps_test">MapsTestActivity</string>
 </resources>
