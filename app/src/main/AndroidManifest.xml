@@ -60,6 +60,10 @@
             android:name=".activities.MapsTestActivity"
             android:label="@string/title_activity_maps_test" >
         </activity>
+        <activity
+            android:name=".activities.OnlinePlayersMapActivity"
+            android:label="@string/title_activity_online_players_map" >
+        </activity>
     </application>
 
 </manifest>

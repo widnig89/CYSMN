@@ -3,8 +3,14 @@ package at.sum.android.cysmn.controllers.location;
 import android.content.Context;
 import android.location.Location;
 
+import com.google.android.gms.games.multiplayer.Participant;
+
+import java.util.List;
+
 import at.sum.android.cysmn.activities.IActivityUpdater;
 import at.sum.android.cysmn.controllers.ControllerObserver;
+import at.sum.android.cysmn.gamelogic.Player;
+import at.sum.android.cysmn.gamelogic.Session;
 import at.sum.android.cysmn.sensing.googleplay.location.LocationService;
 import at.sum.android.cysmn.utils.AppLogger;
 import at.sum.android.cysmn.utils.ServiceEnum;
@@ -39,13 +45,7 @@ public class LocationController implements ControllerObserver {
         if(activityUpdater == null)
             return;
 
-
-
         activityUpdater.updateGui();
-
-
-
-
     }
 
     public Location getCurrentLocation()
@@ -64,6 +64,21 @@ public class LocationController implements ControllerObserver {
             savedLocation = latestLocation;
 
         return new_is_better;
+    }
+
+    public List<Player> getOnlinePlayers()
+    {
+        return Session.getInstance().getOnlinePlayers();
+    }
+
+    public List<Player> getRunners()
+    {
+        return Session.getInstance().getRunners();
+    }
+
+    public List<Player> getAllPlayers()
+    {
+        return Session.getInstance().getPlayers();
     }
 
     @Override

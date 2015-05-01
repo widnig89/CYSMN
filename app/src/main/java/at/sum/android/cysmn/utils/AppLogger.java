@@ -13,4 +13,9 @@ public class AppLogger {
     {
         Log.d(app_name, tag + ": \t" + message);
     }
+
+    public static void logError(String tag, String message)
+    {
+        Log.e(app_name, tag + ": \t" + message);
+    }
 }

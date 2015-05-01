@@ -48,7 +48,7 @@ public class ChooseFactionActivity extends Activity {
 
     public void btnRunner(View view)
     {
-        Intent intent = new Intent(this, MapsTestActivity.class);
+        Intent intent = new Intent(this, RunnersMapActivity.class);
         startActivity(intent);
     }
 }
