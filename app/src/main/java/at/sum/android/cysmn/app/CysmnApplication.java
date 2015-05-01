@@ -1,4 +1,4 @@
-package at.sum.android.cysmn.utils;
+package at.sum.android.cysmn.app;
 
 import android.app.Application;
 

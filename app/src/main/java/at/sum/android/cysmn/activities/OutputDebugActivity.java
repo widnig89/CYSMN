@@ -1,23 +1,29 @@
-package at.sum.android.cysmn;
+package at.sum.android.cysmn.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import at.sum.android.cysmn.R;
+
+public class OutputDebugActivity extends ActionBarActivity {
 
 
-public class MapsTestActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps_test);
+        setContentView(R.layout.activity_output_debug);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_maps_test, menu);
+        getMenuInflater().inflate(R.menu.menu_output_debug, menu);
         return true;
     }
 
@@ -34,5 +40,11 @@ public class MapsTestActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void btnViewPosition(View view)
+    {
+        Intent intent = new Intent(this, DisplayLocationActivity.class);
+        startActivity(intent);
     }
 }

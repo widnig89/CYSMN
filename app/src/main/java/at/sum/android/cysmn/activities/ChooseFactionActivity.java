@@ -1,4 +1,4 @@
-package at.sum.android.cysmn.gui;
+package at.sum.android.cysmn.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import at.sum.android.cysmn.MapsTestActivity;
 import at.sum.android.cysmn.R;
 
 public class ChooseFactionActivity extends Activity {
@@ -43,7 +42,7 @@ public class ChooseFactionActivity extends Activity {
 
     public void btnOnlinePlayer(View view)
     {
-        Intent intent = new Intent(this, MapsActivity.class);
+        Intent intent = new Intent(this, RunnersMapActivity.class);
         startActivity(intent);
     }
 

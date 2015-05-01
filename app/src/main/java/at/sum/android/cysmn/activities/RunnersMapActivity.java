@@ -1,17 +1,13 @@
-package at.sum.android.cysmn.gui;
+package at.sum.android.cysmn.activities;
 
 import android.app.Activity;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.location.Location;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
@@ -21,10 +17,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import at.sum.android.cysmn.R;
-import at.sum.android.cysmn.logic.location.LocationLogic;
+import at.sum.android.cysmn.controllers.location.LocationController;
+import at.sum.android.cysmn.sensing.googleplay.location.LocationService;
 import at.sum.android.cysmn.utils.AppLogger;
 
-public class MapsActivity extends Activity implements OnMapReadyCallback, GuiUpdater {
+public class RunnersMapActivity extends Activity implements OnMapReadyCallback, IActivityUpdater {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private Marker myMarker;
@@ -32,13 +29,17 @@ public class MapsActivity extends Activity implements OnMapReadyCallback, GuiUpd
     private Circle mCircle;
 
     private float zoomLevel;
-    private boolean isZooming = false;
+
+
+    private LocationController locationController;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        locationController = new LocationController(this.getApplicationContext(), this);
 
         zoomLevel = 17.0f;
 
@@ -53,14 +54,14 @@ public class MapsActivity extends Activity implements OnMapReadyCallback, GuiUpd
     public void onResume()
     {
         super.onResume();
-        LocationLogic logic = LocationLogic.getInstance(this, false);
-        logic.registerLocationActivity(this);
     }
 
     @Override
     public void onMapReady(GoogleMap map) {
 
         mMap = map;
+
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(zoomLevel));
 
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
@@ -71,44 +72,37 @@ public class MapsActivity extends Activity implements OnMapReadyCallback, GuiUpd
             }
         });
 
-
-        LocationLogic logic = LocationLogic.getInstance(this, false);
-
         //map.setMyLocationEnabled(true);
 
-        Location currentLocation = logic.getCurrentLocation();
-        double latitude = currentLocation.getLatitude();
-        double longitude = currentLocation.getLongitude();
+        //Location currentLocation = locationController.getCurrentLocation();
+        //double latitude = currentLocation.getLatitude();
+        //double longitude = currentLocation.getLongitude();
 
-        LatLng latLng = new LatLng(latitude, longitude);
+        //LatLng latLng = new LatLng(latitude, longitude);
 
-        myMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.direction_arrow)).position(latLng).anchor(0.5f, 0.5f).flat(true).title("ME"));
+        //myMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.direction_arrow)).position(latLng).anchor(0.5f, 0.5f).flat(true).title("ME"));
 
 
-        cameraPosition = CameraPosition.builder()
-                .target(latLng)
-                .zoom(17)
-                .build();
-
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition),
-                1000, null);
+//        cameraPosition = CameraPosition.builder()
+//                .target(latLng)
+//                .zoom(17)
+//                .build();
+//
+//        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition),
+//                1000, null);
     }
 
     @Override
     public void onPause()
     {
         super.onPause();
-        LocationLogic logic = LocationLogic.getInstance(this, false);
 
-        logic.unregisterLocationActivity();
     }
 
     @Override
     public void updateGui() {
 
-        LocationLogic logic = LocationLogic.getInstance(this, false);
-
-        Location location = logic.getCurrentLocation();
+        Location location = locationController.getCurrentLocation();
         if(hasCurrentLocation(location) == false || mMap==null)
             return;
 
@@ -118,13 +112,20 @@ public class MapsActivity extends Activity implements OnMapReadyCallback, GuiUpd
 
     private void updateMarker(Location currentLocation)
     {
-        if(myMarker == null)
-            return;
-
         double latitude = currentLocation.getLatitude();
         double longitude = currentLocation.getLongitude();
 
         LatLng latLng = new LatLng(latitude, longitude);
+
+        if(myMarker == null) //first time initialize the marker
+        {
+            myMarker = mMap.addMarker(new MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.direction_arrow))
+                    .position(latLng)
+                    .anchor(0.5f, 0.5f)
+                    .flat(true)
+                    .title("ME"));
+        }
 
         myMarker.setPosition(latLng);
         myMarker.setRotation(currentLocation.getBearing());

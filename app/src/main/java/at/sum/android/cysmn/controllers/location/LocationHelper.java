@@ -1,4 +1,4 @@
-package at.sum.android.cysmn.logic.location;
+package at.sum.android.cysmn.controllers.location;
 
 import android.location.Location;
 

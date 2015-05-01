@@ -18,13 +18,13 @@
         android:required="true" />
 
     <application
-        android:name=".utils.CysmnApplication"
+        android:name=".app.CysmnApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".gui.MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,15 +33,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".gui.ChooseFactionActivity"
+            android:name=".activities.ChooseFactionActivity"
             android:label="@string/title_activity_choose_faction" >
         </activity>
         <activity
-            android:name=".gui.DisplayLocationActivity"
+            android:name=".activities.DisplayLocationActivity"
             android:label="@string/title_activity_location_display" >
         </activity>
         <activity
-            android:name=".gui.OutputDebugActivity"
+            android:name=".activities.OutputDebugActivity"
             android:label="@string/title_activity_output_debug" >
         </activity>
 
@@ -53,11 +53,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".gui.MapsActivity"
+            android:name=".activities.RunnersMapActivity"
             android:label="@string/title_activity_maps" >
         </activity>
         <activity
-            android:name=".MapsTestActivity"
+            android:name=".activities.MapsTestActivity"
             android:label="@string/title_activity_maps_test" >
         </activity>
     </application>

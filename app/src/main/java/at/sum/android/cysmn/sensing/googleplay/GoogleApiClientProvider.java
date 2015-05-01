@@ -1,13 +1,14 @@
 package at.sum.android.cysmn.sensing.googleplay;
 
 import android.content.Context;
+import android.location.LocationListener;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import at.sum.android.cysmn.sensing.googleplay.location.LocationUpdateService;
+import at.sum.android.cysmn.sensing.googleplay.location.LocationService;
 import at.sum.android.cysmn.utils.AppLogger;
 
 /**
@@ -35,11 +36,11 @@ public class GoogleApiClientProvider {
 
     private void createGoogleApiClient()
     {
-        List<GoogleApiClientListener> listeners = getListeners();
+        List<GoogleApiClientService> listeners = getListeners();
 
         GoogleApiClient.Builder builder = new GoogleApiClient.Builder(ctx);
 
-        for(GoogleApiClientListener listener : listeners)
+        for(GoogleApiClientService listener : listeners)
         {
             builder.addApi(listener.getAPI())
                     .addConnectionCallbacks(listener)
@@ -66,13 +67,13 @@ public class GoogleApiClientProvider {
         AppLogger.logDebug(this.getClass().getSimpleName(), "Client disconnected!");
     }
 
-    public List<GoogleApiClientListener> getListeners()
+    public List<GoogleApiClientService> getListeners()
     {
-        List<GoogleApiClientListener> listeners = new ArrayList<GoogleApiClientListener>();
+        List<GoogleApiClientService> listeners = new ArrayList<GoogleApiClientService>();
 
         /* Add new GoogleApiClientListeners here */
-        GoogleApiClientListener locationUpdateStarter = new LocationUpdateService(ctx);
-        listeners.add(locationUpdateStarter);
+
+        listeners.add(LocationService.getInstance(ctx));
 
         return listeners;
     }

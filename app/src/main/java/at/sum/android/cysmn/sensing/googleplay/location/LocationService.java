@@ -2,7 +2,6 @@ package at.sum.android.cysmn.sensing.googleplay.location;
 
 import android.content.Context;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -13,67 +12,56 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationListener;
 
-import java.text.DateFormat;
-import java.util.Date;
-
-import at.sum.android.cysmn.logic.location.LocationLogic;
-import at.sum.android.cysmn.sensing.googleplay.GoogleApiClientListener;
+import at.sum.android.cysmn.sensing.googleplay.GoogleApiClientService;
 import at.sum.android.cysmn.sensing.googleplay.GoogleApiClientProvider;
+
+import at.sum.android.cysmn.sensing.googleplay.IGoogleApiClientService;
 import at.sum.android.cysmn.utils.AppLogger;
 
 /**
  * Created by widnig89 on 28.04.15.
  */
-public class LocationUpdateService extends GoogleApiClientListener implements LocationListener {
+public class LocationService extends GoogleApiClientService implements LocationListener {
 
-    private LocationManager locationManager;
 
     private Context ctx;
 
-    private LocationLogic locationLogic;
-
-    private boolean requestingLocationUpdates;
-
     Location currentLocation;
-    String mLastUpdateTime;
 
-    public LocationUpdateService(Context ctx)
+
+    public static LocationService instance;
+
+    public static void createInstance(Context ctx)
     {
-        super(ctx);
-        requestingLocationUpdates = true;
-
+        getInstance(ctx);
     }
 
-
-
-    public void setRequestingLocationUpdates(boolean requesting)
+    public static LocationService getInstance(Context ctx)
     {
-        this.requestingLocationUpdates = requesting;
+        if(instance == null) {
+            instance = new LocationService(ctx);
+        }
+        return instance;
+    }
+
+    private LocationService(Context ctx)
+    {
+        super(ctx);
     }
 
     @Override
     public void onConnected(Bundle bundle) {
 
         AppLogger.logDebug(this.getClass().getSimpleName(), "attempt to request location updates!");
-        GoogleApiClient client = GoogleApiClientProvider.getInstance(ctx).getGoogleApiClient();
-        Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(client);
 
-        if(lastLocation != null)
-        {
-            double latitude = lastLocation.getLatitude();
-            double longitude = lastLocation.getLongitude();
-        }
-
-        if(requestingLocationUpdates)
-        {
-            startLocationUpdates();
-        }
+        startLocationUpdates();
     }
 
     public void startLocationUpdates()
     {
         GoogleApiClient client = GoogleApiClientProvider.getInstance(ctx).getGoogleApiClient();
         LocationServices.FusedLocationApi.requestLocationUpdates(client, createLocationRequest(), this);
+
         AppLogger.logDebug(this.getClass().getSimpleName(), "starting LocationUpdates");
 
     }
@@ -95,31 +83,17 @@ public class LocationUpdateService extends GoogleApiClientListener implements Lo
 
     @Override
     public void onLocationChanged(Location location) {
+        AppLogger.logDebug(this.getClass().getSimpleName(), "change location happened");
+
         currentLocation = location;
-        mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-        LocationLogic.getInstance(ctx,false).notify(this);
-        AppLogger.logDebug(this.getClass().getSimpleName(), "LocationChangedHappened");
+        notifyObservers();
+
 
     }
 
     public Location getCurrentLocation()
     {
         return currentLocation;
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
     }
 
     private LocationRequest createLocationRequest() {

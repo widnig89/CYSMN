@@ -1,15 +1,9 @@
-package at.sum.android.cysmn.gui;
+package at.sum.android.cysmn.activities;
 
 import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import at.sum.android.cysmn.R;
 
