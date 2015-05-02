@@ -17,6 +17,7 @@ import at.sum.android.cysmn.sensing.googleplay.GoogleApiClientProvider;
 
 import at.sum.android.cysmn.sensing.googleplay.IGoogleApiClientService;
 import at.sum.android.cysmn.utils.AppLogger;
+import at.sum.android.cysmn.utils.ServiceEnum;
 
 /**
  * Created by widnig89 on 28.04.15.
@@ -86,7 +87,7 @@ public class LocationService extends GoogleApiClientService implements LocationL
         AppLogger.logDebug(this.getClass().getSimpleName(), "change location happened");
 
         currentLocation = location;
-        notifyObservers();
+        notifyObservers(ServiceEnum.LOCATION);
 
 
     }

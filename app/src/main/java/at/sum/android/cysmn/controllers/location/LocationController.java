@@ -3,22 +3,19 @@ package at.sum.android.cysmn.controllers.location;
 import android.content.Context;
 import android.location.Location;
 
-import com.google.android.gms.games.multiplayer.Participant;
-
 import java.util.List;
 
 import at.sum.android.cysmn.activities.IActivityUpdater;
-import at.sum.android.cysmn.controllers.ControllerObserver;
+import at.sum.android.cysmn.controllers.IControllerObserver;
 import at.sum.android.cysmn.gamelogic.Player;
 import at.sum.android.cysmn.gamelogic.Session;
-import at.sum.android.cysmn.sensing.googleplay.location.LocationService;
 import at.sum.android.cysmn.utils.AppLogger;
 import at.sum.android.cysmn.utils.ServiceEnum;
 
 /**
  * Created by widnig89 on 28.04.15.
  */
-public class LocationController implements ControllerObserver {
+public class LocationController implements IControllerObserver {
 
 
     public static final String FIELD_LONGITUDE = "Longitude";
@@ -27,6 +24,7 @@ public class LocationController implements ControllerObserver {
     private Context ctx;
     private IActivityUpdater activityUpdater;
     private Location savedLocation;
+
 
 
     private LocationFacade locationFacade;
@@ -46,6 +44,16 @@ public class LocationController implements ControllerObserver {
             return;
 
         activityUpdater.updateGui();
+    }
+
+    public void pauseController()
+    {
+        locationFacade.stopSensing();
+    }
+
+    public void activateController()
+    {
+        locationFacade.startSensing();
     }
 
     public Location getCurrentLocation()
@@ -93,8 +101,23 @@ public class LocationController implements ControllerObserver {
                     updateGui();
                 }
                 break;
+            case COMPASS:
+                AppLogger.logDebug(getClass().getSimpleName(), "compass event occurred in controller!");
+                updateGui();
+                break;
+
         }
 
 
+    }
+
+    public float getAzimuthInDegrees()
+    {
+        return locationFacade.getAzimuthInDegrees();
+    }
+
+    public float getCurrentDegrees()
+    {
+        return locationFacade.getCurrentDegrees();
     }
 }

@@ -10,27 +10,27 @@ import at.sum.android.cysmn.utils.ServiceEnum;
  */
 public abstract class ControllerSubject implements IControllerSubject {
 
-    protected ArrayList<ControllerObserver> observers;
+    protected ArrayList<IControllerObserver> observers;
 
     public ControllerSubject()
     {
         observers = new ArrayList<>();
     }
 
-    public void registerControllerObserver(ControllerObserver controllerObserver)
+    public void registerControllerObserver(IControllerObserver controllerObserver)
     {
         AppLogger.logDebug(this.getClass().getSimpleName(), "observer registered!");
         observers.add(controllerObserver);
     }
 
-    public void unregisterControllerObserver(ControllerObserver controllerObserver)
+    public void unregisterControllerObserver(IControllerObserver controllerObserver)
     {
         observers.remove(controllerObserver);
     }
 
     public void notifyControllerObservers(ServiceEnum serviceEnum)
     {
-        for(ControllerObserver o : observers)
+        for(IControllerObserver o : observers)
         {
             AppLogger.logDebug(getClass().getSimpleName(), "notifyControllerObservers for Observer!");
             o.notify(serviceEnum);

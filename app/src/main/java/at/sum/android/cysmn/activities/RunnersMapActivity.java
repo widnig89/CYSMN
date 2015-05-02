@@ -3,6 +3,8 @@ package at.sum.android.cysmn.activities;
 import android.app.Activity;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -59,6 +61,7 @@ public class RunnersMapActivity extends Activity implements OnMapReadyCallback, 
     public void onResume()
     {
         super.onResume();
+        locationController.activateController();
     }
 
     @Override
@@ -92,7 +95,7 @@ public class RunnersMapActivity extends Activity implements OnMapReadyCallback, 
     public void onPause()
     {
         super.onPause();
-
+        locationController.pauseController();
     }
 
     @Override
@@ -103,6 +106,16 @@ public class RunnersMapActivity extends Activity implements OnMapReadyCallback, 
 
         updateMyPosition();
         updateOthersPosition();
+        //updateMarkerOrientation(); //compass
+    }
+
+    private void updateMarkerOrientation()
+    {
+//        RotateAnimation rotateAnimation = new RotateAnimation(locationController.getCurrentDegrees(),
+//                locationController.getAzimuthInDegrees(), Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+//        rotateAnimation.setDuration(250);
+//        rotateAnimation.setFillAfter(true);
+        //myMarker.setRotation();
     }
 
     private void updateMyPosition() {
@@ -173,7 +186,6 @@ public class RunnersMapActivity extends Activity implements OnMapReadyCallback, 
         {
             case RUNNER:
                 player.setMarkerOptions(player.getMarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.direction_arrow_green)));
-
                 break;
             case ONLINE_PLAYER:
                 player.setMarkerOptions(player.getMarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.direction_arrow_red)));
@@ -210,6 +222,7 @@ public class RunnersMapActivity extends Activity implements OnMapReadyCallback, 
 
         myMarker.setPosition(latLng);
         myMarker.setRotation(currentLocation.getBearing());
+        //myMarker.setRotation(locationController.getAzimuthInDegrees());
 
         if(mCircle == null){
             drawMarkerWithCircle(latLng);
@@ -243,6 +256,7 @@ public class RunnersMapActivity extends Activity implements OnMapReadyCallback, 
         cameraPosition = CameraPosition.builder()
                 .target(latLng)
                 .zoom(zoomLevel)
+                //.bearing(locationController.getAzimuthInDegrees())
                 .bearing(currentLocation.getBearing())
                 .build();
 
