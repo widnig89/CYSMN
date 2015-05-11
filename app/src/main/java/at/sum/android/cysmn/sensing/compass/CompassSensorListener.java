@@ -17,6 +17,8 @@ import at.sum.android.cysmn.utils.ServiceEnum;
  */
 public class CompassSensorListener extends ServiceFacadeSubject implements SensorEventListener, ISensorHandler {
 
+    private double UPDATE_FREQUENCY = 1.5; //each [value] seconds an notify to the controller
+
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private Sensor magnetometer;
@@ -28,7 +30,7 @@ public class CompassSensorListener extends ServiceFacadeSubject implements Senso
     private float[] orientation = new float[3];
     private float currentDegree = 0.0f;
     private float azimuthInDegrees = 0.0f;
-    private long oldTimeSec = 0;
+    private double oldTimeSec = 0.0;
 
 
     private Context ctx;
@@ -47,7 +49,7 @@ public class CompassSensorListener extends ServiceFacadeSubject implements Senso
     @Override
     public void onSensorChanged(SensorEvent event) {
         //AppLogger.logDebug(getClass().getSimpleName(), "Compass: onSensorChanged");
-        Long currentTimeSec = event.timestamp / 1000000000; //get seconds
+        double currentTimeSec = event.timestamp / 1000000000.0; //get seconds
         if (event.sensor == accelerometer) {
             System.arraycopy(event.values, 0, lastAccelerometer, 0, event.values.length);
             lastAccelerometerSet = true;
@@ -66,7 +68,7 @@ public class CompassSensorListener extends ServiceFacadeSubject implements Senso
             lastAccelerometerSet = false;
             lastMagnetometerSet = false;
 
-            if(currentTimeSec - oldTimeSec > 2) //bigger than 2 seconds (from nanoseconds)
+            if(currentTimeSec - oldTimeSec > UPDATE_FREQUENCY)
             {
                 oldTimeSec = currentTimeSec;
                 notifyObservers(ServiceEnum.COMPASS);

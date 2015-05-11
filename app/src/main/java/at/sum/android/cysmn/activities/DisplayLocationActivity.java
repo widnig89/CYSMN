@@ -37,13 +37,14 @@ public class DisplayLocationActivity extends Activity implements IActivityUpdate
     public void onResume()
     {
         super.onResume();
-
+        locationController.activateController();
     }
 
     @Override
     public void onPause()
     {
         super.onPause();
+        locationController.pauseController();
 
     }
 
@@ -51,8 +52,13 @@ public class DisplayLocationActivity extends Activity implements IActivityUpdate
     public void updateGui() {
 
         Location curLocation = locationController.getCurrentLocation();
+
+        if(curLocation == null)
+            return;
         txtLongitude.setText(Double.toString(curLocation.getLongitude()));
         txtLatitude.setText(Double.toString(curLocation.getLatitude()));
-        txtBearing.setText(Float.toString(curLocation.getBearing()));
+        //txtBearing.setText(Float.toString(curLocation.getBearing()));
+        txtBearing.setText(Float.toString(locationController.getAzimuthInDegrees()));
+
     }
 }
