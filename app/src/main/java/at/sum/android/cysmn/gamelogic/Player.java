@@ -5,6 +5,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 
 import at.sum.android.cysmn.R;
 import at.sum.android.cysmn.utils.AppLogger;
@@ -21,7 +22,25 @@ public class Player {
     private Marker marker;
     private MarkerOptions markerOptions;
     private FactionEnum faction;
+    private Boolean selected;
+    private Polyline polyline;
 
+    public Boolean hasPolyline(){
+        if(this.polyline != null)
+            return true;
+        else
+            return false;
+    }
+
+    public void  setPolyline(Polyline line){
+        this.polyline = line;
+    }
+    public void deletePolyline(){
+        if(this.polyline != null)
+            this.polyline.remove();
+
+        AppLogger.logDebug(getClass().getSimpleName(), "Polyline DELETED!!");
+    }
 
     public FactionEnum getFaction() {
         return faction;
@@ -42,6 +61,8 @@ public class Player {
         this.longitude = longitude;
         this.bearing = bearing;
         this.faction = FactionEnum.values()[faction_id];
+        this.selected = false;
+        this.polyline = null;
 
         AppLogger.logDebug(getClass().getSimpleName(), "Created Player: " /* + participant.getDisplayName() */
         + "\n Latitude: " + latitude + "\n Longitude: " + longitude + "\n Bearing: " + bearing + "\n Faction: " + this.faction);
@@ -55,7 +76,7 @@ public class Player {
         //.title(participant.getDisplayName());
 
         if(participant == null)
-            markerOptions.title("DummyTest " + faction);
+            markerOptions.title("DummyTest"); // + faction);
         else
             markerOptions.title(participant.getDisplayName());
     }
@@ -99,5 +120,24 @@ public class Player {
 
     public void setBearing(float bearing) {
         this.bearing = bearing;
+    }
+
+    public Boolean isSelected() { return this.selected; }
+
+    public void selectAndUnselect() {
+
+        if(this.selected==true)
+            this.selected=false;
+        else
+            this.selected=true;
+    }
+
+    public String getPlayerType() {
+        if(this.faction == FactionEnum.RUNNER)
+            return "Runner";
+        if(this.faction == FactionEnum.ONLINE_PLAYER)
+            return "Online Player";
+
+        return "Inspector";
     }
 }

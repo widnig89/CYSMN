@@ -1,6 +1,7 @@
 package at.sum.android.cysmn.activities;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +21,10 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +45,7 @@ public class RunnersMapActivity extends Activity implements OnMapReadyCallback, 
 
 
     private LocationController locationController;
+
 
 
     @Override
@@ -91,12 +96,41 @@ public class RunnersMapActivity extends Activity implements OnMapReadyCallback, 
         for(Player p : players)
         {
             createMarker(p);
+            registerMarkerClickHandler(map,p);
         }
     }
 
+    private void registerMarkerClickHandler(GoogleMap map, Player dst) {
+
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+            @Override
+            public boolean onMarkerClick(Marker p1) {
+
+                List<Player> all = locationController.getAllPlayers();
+                Player selected = null;
+                for (Player p : all) {
+                    if (p1.equals(p.getMarker()))
+                        selected = p;
+                }
+
+                if (selected != null && selected.isSelected()) {
+                    selected.deletePolyline();
+                    selected.selectAndUnselect(); // unselect in this case
+                    return true;
+                }
+
+                if (selected != null && !selected.isSelected())
+                    selected.selectAndUnselect();
+
+                return true;
+            }
+
+        });
+    }
+
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
         locationController.pauseController();
     }
@@ -109,8 +143,50 @@ public class RunnersMapActivity extends Activity implements OnMapReadyCallback, 
 
         updateMyPosition();
         updateOthersPosition();
+        updateMarkerLabel();
         //updateMarkerOrientation(); //compass
     }
+
+    private void updateMarkerLabel() {
+        List<Player> players = locationController.getAllPlayers();
+        Marker p1 = null;
+        Player selected = null;
+        for(Player player : players)
+        {
+            if(player.isSelected())
+                p1 = player.getMarker();
+                selected = player;
+        }
+
+        if( p1 != null && myMarker != null){
+            float[] results = new float[1];
+            Location.distanceBetween(myMarker.getPosition().latitude, myMarker.getPosition().longitude,
+                    p1.getPosition().latitude, myMarker.getPosition().longitude, results);
+            p1.setTitle(selected.getPlayerType() + " " + new DecimalFormat("#.#").format(results[0]) + "m");
+            p1.showInfoWindow();
+
+
+            // draw polyline to selected marker
+            selected.deletePolyline();
+
+
+            ArrayList<LatLng> arrayPoints = new ArrayList<LatLng>();
+            arrayPoints.add(p1.getPosition());
+            arrayPoints.add(myMarker.getPosition());
+
+            PolylineOptions polylineOptions = new PolylineOptions();
+            polylineOptions.color(Color.RED);
+            polylineOptions.width(5);
+            polylineOptions.addAll(arrayPoints);
+            Polyline polyline = mMap.addPolyline(polylineOptions);
+            selected.setPolyline(polyline);
+
+        }
+
+
+
+    }
+
 
     private void updateMarkerOrientation()
     {

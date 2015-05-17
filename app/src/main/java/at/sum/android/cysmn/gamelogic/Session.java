@@ -32,10 +32,10 @@ public class Session {
         players = new ArrayList<>();
 
         //TODO: remove these entries, these are only for testing
-        addPlayer(new Player(null, 47.05866253, 15.44849396, 45.0f, 0));
-        addPlayer(new Player(null, 47.0611183, 15.45656204, 245.0f, 1));
-        addPlayer(new Player(null, 47.06930338, 15.43870926, 180.0f, 0));
-        addPlayer(new Player(null, 47.08467626, 15.42858124, 320.0f, 1));
+        addPlayer(new Player(null, 47.05991966, 15.46407223, 364.956f, 0));
+        //addPlayer(new Player(null, 47.0611183, 15.45656204, 245.0f, 1));
+        //addPlayer(new Player(null, 47.06930338, 15.43870926, 180.0f, 0));
+        //addPlayer(new Player(null, 47.08467626, 15.42858124, 320.0f, 1));
 
 
     }
