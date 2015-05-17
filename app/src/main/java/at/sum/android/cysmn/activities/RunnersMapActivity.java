@@ -1,6 +1,7 @@
 package at.sum.android.cysmn.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -144,7 +145,32 @@ public class RunnersMapActivity extends Activity implements OnMapReadyCallback, 
         updateMyPosition();
         updateOthersPosition();
         updateMarkerLabel();
+        checkForCollision();
         //updateMarkerOrientation(); //compass
+    }
+
+    private void checkForCollision() {
+        List<Player> runners = locationController.getRunners();
+        float[] dist = new float[1];
+        for(Player runner : runners)
+        {
+                LatLng markerPosition = runner.getMarker().getPosition();
+            if(markerPosition != null && myMarker.getPosition() != null)
+            {
+                Location.distanceBetween(myMarker.getPosition().latitude, myMarker.getPosition().longitude,
+                                        markerPosition.latitude, markerPosition.longitude, dist);
+
+                if(dist[0] < 50)
+                {
+                    Intent intent = new Intent(this, GotCaughtActivity.class);
+                    startActivity(intent);
+                }
+
+            }
+
+
+
+        }
     }
 
     private void updateMarkerLabel() {

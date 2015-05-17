@@ -14,13 +14,13 @@ public class GotCaughtActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gotcaught);
+        setContentView(R.layout.activity_got_caught);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_gotcaught, menu);
+        getMenuInflater().inflate(R.menu.menu_got_caught, menu);
         return true;
     }
 

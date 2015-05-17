@@ -54,8 +54,8 @@
 
         <activity
             android:name=".activities.RunnersMapActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_maps" >
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.MapsTestActivity"
@@ -64,6 +64,10 @@
         <activity
             android:name=".activities.OnlinePlayersMapActivity"
             android:label="@string/title_activity_online_players_map" >
+        </activity>
+        <activity
+            android:name=".activities.GotCaughtActivity"
+            android:label="@string/title_activity_got_caught" >
         </activity>
     </application>
 
