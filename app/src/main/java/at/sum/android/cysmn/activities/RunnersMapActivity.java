@@ -155,7 +155,7 @@ public class RunnersMapActivity extends Activity implements OnMapReadyCallback, 
         for(Player runner : runners)
         {
                 LatLng markerPosition = runner.getMarker().getPosition();
-            if(markerPosition != null && myMarker.getPosition() != null)
+            if(markerPosition != null && myMarker != null )
             {
                 Location.distanceBetween(myMarker.getPosition().latitude, myMarker.getPosition().longitude,
                                         markerPosition.latitude, markerPosition.longitude, dist);
